@@ -1,0 +1,113 @@
+section.icon {
+  width: 500px;
+  height: 500px;
+  background-color: black;
+}
+
+section.circles {
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+}
+
+.marks-container {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  transition: transform 4000ms ease-in-out, filter 3000ms ease-in-out,
+    opacity 4000ms ease-in-out;
+  transition: transform 4000ms ease-in-out, filter 2000ms ease-in-out,
+    opacity 4000ms ease-in-out;
+}
+
+.mark {
+  display: block;
+  position: absolute;
+  animation: markIn 200ms forwards cubic-bezier(0, 0.73, 0.12, 1.71);
+  animation-play-state: running;
+  transition: opacity 2000ms;
+  left: 675px;
+  top: 230px;
+}
+
+.mark-outer {
+  transition: transform 5000ms, opacity 5000ms;
+}
+
+.mark-inner {
+  width: 150px;
+  height: 150px;
+  background-color: #322b35;
+  border-radius: 40% 60% 54% 46%/49% 60% 40% 51%;
+  opacity: 0.9;
+  animation: mark 30s ease-in-out infinite both alternate;
+  animation-play-state: running;
+}
+
+.mark-1 .mark-outer {
+  transform: rotate(10deg);
+}
+
+.mark-2 .mark-outer {
+  transform: rotate(80deg);
+}
+
+.mark-3 .mark-outer {
+  transform: rotate(190deg);
+}
+
+.mark-4 .mark-outer {
+  transform: rotate(240deg);
+}
+
+.marks-container .mark-5 .mark-outer {
+  transform: rotate(80deg);
+}
+
+.marks-container .mark-6 .mark-outer {
+  transform: rotate(190deg);
+}
+
+.marks-container .mark-7 .mark-outer {
+  transform: rotate(240deg);
+}
+
+/*Out*/
+.mark-1.out .mark-outer {
+  transform: rotate(10deg) scale(0.95);
+  opacity: 0;
+}
+
+.mark-2.out .mark-outer {
+  transform: rotate(80deg) scale(0.95);
+  opacity: 0;
+}
+
+.mark-3.out .mark-outer {
+  transform: rotate(190deg) scale(0.95);
+  opacity: 0;
+}
+
+.mark-4.out .mark-outer {
+  transform: rotate(240deg) scale(0.95);
+  opacity: 0;
+}
+
+.marks-container .mark-5.out .mark-outer {
+  transform: rotate(80deg) scale(0.95);
+  opacity: 0;
+}
+
+.marks-container .mark-6.out .mark-outer {
+  transform: rotate(190deg) scale(0.95);
+  opacity: 0;
+}
+
+.marks-container .mark-7.out .mark-outer {
+  transform: rotate(240deg) scale(0.95);
+  opacity: 0;
+}

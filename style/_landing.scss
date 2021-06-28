@@ -1,0 +1,44 @@
+section.landing {
+  height: 100vh;
+  background-color: transparent;
+}
+section.landing .container {
+  width: 100%;
+  height: 100%;
+  display: table;
+  position: relative;
+}
+section.landing .container .button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+section.landing .landing-info {
+  display: table-cell;
+  vertical-align: middle;
+  padding-bottom: 100px;
+}
+section.landing .landing-info .avatar {
+  width: 240px;
+  height: 240px;
+  box-shadow: 5px 5px 10px #00000029;
+  border: 1px solid #ffffff;
+  background-image: url("../assets/avatar.JPG");
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  margin-bottom: 30px;
+}
+section.landing .landing-info p {
+  text-align: center;
+  letter-spacing: 1.1px;
+  font-weight: 300;
+}
+section.landing .landing-info p span {
+  font-weight: 400;
+  font-style: italic;
+  border: 2px solid #f4b4b1;
+  border-radius: 50%;
+  padding: 6px 4px;
+}

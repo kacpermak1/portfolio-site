@@ -6,6 +6,11 @@
   opacity: 0;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
 .section-switcher {
   position: fixed;
   width: 40px;
@@ -16,7 +21,7 @@
   top: 50%;
   transform: translateY(-50%);
   padding: 30px 0;
-  transition: opacity 0.5s ease-in-out 2s;
+  transition: opacity 0.4s ease-in-out 1s;
 
   & > div:nth-of-type(2) {
     margin: 30px 0;
@@ -67,5 +72,28 @@
     width: 23px;
     height: 23px;
     opacity: 0.55;
+  }
+}
+
+.paging {
+  width: 100%;
+  text-align: center;
+
+  .paging-dot {
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    margin: 5px;
+
+    &.active {
+      background-color: #f0eec4;
+    }
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+    }
   }
 }

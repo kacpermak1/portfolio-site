@@ -11,10 +11,11 @@ html {
   font-family: $font-main;
   scroll-behavior: smooth;
   color: $font-color;
+  scroll-snap-type: y mandatory;
 }
 
 body {
-  background: linear-gradient(143deg, #f8f6ea, #fdecb4);
+  background: linear-gradient(143deg, #f8f0f3, #e5daf7);
   background-attachment: fixed;
   max-height: 100vh;
   overflow: scroll;

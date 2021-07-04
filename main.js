@@ -1,5 +1,7 @@
 //global variables
 const sectionCircles = document.querySelector("section.circles");
+const sectionAboutMe = document.querySelector("section.about-me");
+const sectionMyWork = document.querySelector("section.my-work");
 
 const bubbles = () => {
   const colors = ["#B0EEE3", "#EEF0B1", "#F4B4B1", "#A4A4E4", "#EED1A9"];
@@ -9,8 +11,6 @@ const bubbles = () => {
   let myTimeot;
 
   sectionCircles.addEventListener("mousemove", (e) => {
-    showLandingItems();
-
     if (document.documentElement.scrollTop <= sectionCircles.offsetHeight / 3) {
       clearTimeout(myTimeot);
       myTimeot = setTimeout(function () {
@@ -22,8 +22,8 @@ const bubbles = () => {
 
   function createBubble(e) {
     const size = Math.floor(Math.random() * (260 - 120) + 120);
-    let bubble = `<div style="left:${e.offsetX}px; top:${
-      e.offsetY
+    let bubble = `<div style="left:${e.layerX}px; top:${
+      e.layerY
     }px" class="mark mark-${Math.floor(Math.random() * (7 - 1) + 1)}">
       <div class="mark-outer">
         <div class="mark-inner" style="background-color:${
@@ -107,14 +107,10 @@ const showLandingItems = () => {
 
   if (noneVisibleElements) {
     for (let i = 0; i < noneVisibleElements.length; i++) {
-      if (bubbles && bubbles.length > 0) {
-        noneVisibleElements[i].classList.remove("d-none");
-      }
+      noneVisibleElements[i].classList.remove("d-none");
     }
     const sectionSwitcher = document.querySelector(".section-switcher.v-none");
-    if (sectionSwitcher) {
-      sectionSwitcher.classList.remove("v-none");
-    }
+    sectionSwitcher.classList.remove("v-none");
   }
 };
 
@@ -147,61 +143,150 @@ const canSwitchSectionMark = (elem) => {
   );
 };
 
-const controller = new ScrollMagic.Controller();
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 3000,
-  triggerHook: 0,
-})
-  .setPin(".about-me")
-  .addTo(controller);
+const aboutMeSlider = () => {
+  const sliderItems = sectionAboutMe.querySelectorAll(".slider-item");
+  const paging = sectionAboutMe.querySelector(".paging");
+  let sliderIntervalID;
+  let currentIndex = 0;
+  const sliderLength = sliderItems.length;
 
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 600,
-  offset: 0,
-  triggerHook: 0,
-})
-  .setClassToggle("#p1", "active")
-  .addTo(controller);
+  //add paging items
+  for (let i = 0; i < sliderLength; i++) {
+    const pagingItem = document.createElement("div");
+    pagingItem.dataset.index = i;
 
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 600,
-  offset: 600,
-  triggerHook: 0,
-})
-  .setClassToggle("#p2", "active")
-  .addTo(controller);
+    if (i === 0) {
+      //add active class to the first
+      pagingItem.className = "paging-dot active";
+    } else {
+      pagingItem.className = "paging-dot";
+    }
 
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 600,
-  offset: 1200,
-  triggerHook: 0,
-})
-  .setClassToggle("#p3", "active")
-  .addTo(controller);
+    pagingItem.addEventListener("click", function () {
+      for (let i = 0; i < sliderLength; i++) {
+        sliderItems[i].classList.remove("visible");
+        paging.querySelectorAll(".paging-dot")[i].classList.remove("active");
+      }
+      currentIndex = parseInt(this.dataset.index);
+      this.classList.add("active");
+      sliderItems[currentIndex].classList.add("visible");
+      clearInterval(sliderIntervalID);
+      sliderInterval();
+    });
 
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 600,
-  offset: 1800,
-  triggerHook: 0,
-})
-  .setClassToggle("#p4", "active")
-  .addTo(controller);
+    paging.appendChild(pagingItem);
+  }
 
-new ScrollMagic.Scene({
-  triggerElement: ".about-me",
-  duration: 600,
-  offset: 2400,
-  triggerHook: 0,
-})
-  .setClassToggle("#p5", "active")
-  .addTo(controller);
+  const pagingDots = paging.querySelectorAll(".paging-dot");
+
+  const sliderInterval = () => {
+    sliderIntervalID = setInterval(() => {
+      for (let i = 0; i < sliderLength; i++) {
+        if (sliderItems[i].classList.contains("visible")) {
+          sliderItems[i].classList.remove("visible");
+          pagingDots[i].classList.remove("active");
+        }
+      }
+
+      if (currentIndex === sliderLength - 1) {
+        currentIndex = 0;
+      } else {
+        currentIndex += 1;
+      }
+      sliderItems[currentIndex].classList.add("visible");
+      pagingDots[currentIndex].classList.add("active");
+    }, 3000);
+  };
+
+  sliderInterval();
+};
+
+const myWorkPaging = () => {
+  const paging = sectionMyWork.querySelector(".paging");
+  const myWorkPages = sectionMyWork.querySelectorAll(".my-work-wrapper");
+  //add paging items
+  for (let i = 0; i < myWorkPages.length; i++) {
+    const pagingItem = document.createElement("div");
+    pagingItem.dataset.index = i;
+
+    if (i === 0) {
+      //add active class to the first
+      pagingItem.className = "paging-dot active";
+    } else {
+      pagingItem.className = "paging-dot";
+    }
+
+    pagingItem.addEventListener("click", function () {
+      for (let i = 0; i < myWorkPages.length; i++) {
+        myWorkPages[i].classList.remove("visible");
+        paging.querySelectorAll(".paging-dot")[i].classList.remove("active");
+      }
+      this.classList.add("active");
+      myWorkPages[parseInt(this.dataset.index)].classList.add("visible");
+    });
+
+    paging.appendChild(pagingItem);
+  }
+};
+
+// const controller = new ScrollMagic.Controller();
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 3000,
+//   triggerHook: 0,
+// })
+//   .setPin(".about-me")
+//   .addTo(controller);
+
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 600,
+//   offset: 0,
+//   triggerHook: 0,
+// })
+//   .setClassToggle("#p1", "active")
+//   .addTo(controller);
+
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 600,
+//   offset: 600,
+//   triggerHook: 0,
+// })
+//   .setClassToggle("#p2", "active")
+//   .addTo(controller);
+
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 600,
+//   offset: 1200,
+//   triggerHook: 0,
+// })
+//   .setClassToggle("#p3", "active")
+//   .addTo(controller);
+
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 600,
+//   offset: 1800,
+//   triggerHook: 0,
+// })
+//   .setClassToggle("#p4", "active")
+//   .addTo(controller);
+
+// new ScrollMagic.Scene({
+//   triggerElement: ".about-me",
+//   duration: 600,
+//   offset: 2400,
+//   triggerHook: 0,
+// })
+//   .setClassToggle("#p5", "active")
+//   .addTo(controller);
 
 startLandingPage();
+showLandingItems();
 bubbles();
 changeBubblesOpcaityOnScroll();
 sectionSwitcher();
+aboutMeSlider();
+myWorkPaging();
